@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const foodData = JSON.parse(localStorage.getItem("food-data"));
     const tableBody = document.getElementById("table");
     foodData.forEach(food => {
+        console.log(food);
   const row = document.createElement("tr");
 
   const foodNameCell = document.createElement("td");
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
   row.appendChild(foodNameCell);
 
   const shelfLifeCell = document.createElement("td");
-  shelfLifeCell.textContent = food.expirydate;
+  shelfLifeCell.textContent = food.foodexpiry;
   row.appendChild(shelfLifeCell);
 
 

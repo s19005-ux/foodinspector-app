@@ -288,18 +288,18 @@ const saveButton = document.getElementById("save-button");
 // Add an event listener to the save button's click event.
 saveButton.addEventListener("click", function() {
   const foodname = document.getElementById("food-name").innerHTML;
-  const foodimage = document.getElementById("food-image").src;
   const storage = document.getElementById("storage-dropdown").value;
-  let foodexpiry = (new Date()).getDate();
+  let foodexpiry = (new Date());
 
+console.log(foodexpiry);
   if (storage === "Refrigerator") {
-    foodexpiry += results["refrigerate"][0];
+    foodexpiry.setDate(foodexpiry.getDate() + results["refrigerate"][0]);
   }
   else if (storage === "Freezer") {
-    foodexpiry += results["freeze"][0];
+    foodexpiry.setDate(foodexpiry.getDate() + results["freeze"][0]);
   }
   else {
-    foodexpiry += results["pantry"][0];
+    foodexpiry.setDate(foodexpiry.getDate() + results["pantry"][0]);
   }
   function generate5LetterUUID() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -312,9 +312,9 @@ saveButton.addEventListener("click", function() {
   
     return uuid;
   }
+  console.log(foodexpiry.toLocaleString());
   
-  
-  let foodData = { 'id': generate5LetterUUID(), 'foodname': foodname, 'foodimage': foodimage, 'storage': storage, 'foodexpiry': foodexpiry };
+  let foodData = { 'id': generate5LetterUUID(), 'foodname': foodname, 'storage': storage, 'foodexpiry': foodexpiry.toLocaleString()};
   // Save the information to the database.
   // Save the array to localStorage.
   // localStorage.setItem("food-data", JSON.stringify(foodData));
@@ -322,14 +322,14 @@ saveButton.addEventListener("click", function() {
     // Create a new array
     const foodDataArray = [];
     // Add the food data to the array
-    foodDataArray.push(JSON.stringify(foodData));
+    foodDataArray.push((foodData));
     // Set the "food-data" item in localStorage
     localStorage.setItem("food-data", JSON.stringify(foodDataArray));
   } else {
     // Get the existing food data array from localStorage
     const foodDataArray = JSON.parse(localStorage.getItem("food-data"));
     // Add the new food data to the array
-    foodDataArray.push(JSON.stringify(foodData));
+    foodDataArray.push((foodData));
     // Set the "food-data" item in localStorage
     localStorage.setItem("food-data", JSON.stringify(foodDataArray));
   }
