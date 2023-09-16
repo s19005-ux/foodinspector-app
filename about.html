@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Foodshelf Life</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    img {
+      display: block;
+      width: 720px;
+      height: 720px;
+      margin-right: 20px;
+      border-radius: 8px;
+    }
+
+    .credit {
+      margin-top: 6px;
+      display: inline-block;
+      font-size: 12px;
+      color: #999;
+    }
+
+    canvas {
+      border-radius: 8px;
+      position: absolute;
+    }
+
+    .result-container {
+      position: relative;
+      width: 224px;
+      height: 224px;
+    }
+
+    .trigger {
+      border: 1px dashed #ccc;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #e28843;
+    }
+
+    .trigger:hover {
+      background-color: #eee;
+    }
+
+    .hide {
+      display: none;
+    }
+        /* Style for the video container */
+        #video-container {
+        position: relative;
+    }
+
+    /* Style for the video element */
+    #camera-feed {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Style for the floating button */
+    #floating-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 10%;
+        cursor: pointer;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    a {
+      color: blue;
+      text-decoration: none;
+    }
+
+
+  </style>
+
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1 class="text-center">FoodInspector</h1>
+    <ul>
+      <li><a href="/index3.html">Home</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/account.html">My Info</a></li>
+    </ul>
+    <hr style="color: black; height: 5px;"/>
+  </header>
+
+  <h1 class="text-center">About</h1>
+
+  <p class="lead">Foodinspector is a mobile app that uses image recognition to help you identify food and determine its shelf life. We aim to reduce food waste by providing accurate and up-to-date information about food expiration dates.</p>
+
+  <img src="un_food_waste.jpg" class="img-fluid mt-3" a lt="Food waste">
+
+  <p>According to the Food and Agriculture Organization of the United Nations, 33% of all food produced for human is wasted globally. This amounts to about 1.3 billion tonnes of food per year. The majority of food waste occurs at the retail and consumer levels, and is due to factors such as expiration dates, spoilage, and over-purchasing.</p>
+
+  <ul class="list-unstyled mt-3">
+    <li>Identifying food by image</li>
+    <li>Determining the shelf life of food</li>
+    <li>Providing tips on how to store food properly</li>
+  </ul>
+
+  <p>By using FoodInspector, you can help us make a difference.</p>
+
+  <h2>How we trained our food recognition</h2>
+  <p class="lead">Using TensorFlow Transfer Learning an innovative technique, we trained our machine learning model to recognize all types of fruits & vegetables.</p>
+  <img src="greattraining.png" class="img-fluid mt-3" alt="Training">
+
+  <h2>Food shelf life data</h2>
+  <p>How does the app know how long food can be stored? Food shelf life data and cooking tips come as open data from the FoodKeeper API.
+    This API is regularly updated and accurate.
+  </p>
+</div>
+
+</body>
+</html>
