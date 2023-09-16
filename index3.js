@@ -1,13 +1,12 @@
 var videoElement;
 var labels;
 var data;
-var results;
 
   async function start() {
      
     // Load the model.
     const tfliteModel = await tf.loadGraphModel(
-      "jsmodelv6/model.json",
+      "jsmodelv4/model.json",
     );
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -93,7 +92,7 @@ var results;
     const predictionArray = predict2.arraySync()[0]; // Convert predictions to a JavaScript array
     const topPredictionIndex = predictionArray.indexOf(Math.max(...predictionArray)); // Find the index of the class with the highest probability
     console.log(labels[topPredictionIndex], predictionArray[topPredictionIndex]);
-    results = search_for_food(labels[topPredictionIndex], true);
+    const results = search_for_food(labels[topPredictionIndex], true);
 
     const foodname = document.getElementById("food-name");
     foodname.innerHTML = labels[topPredictionIndex];
@@ -205,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function search_for_food(name, usemapping=true) {
-  const mapping = { "Apple": "Apples", "Banana":"Bananas", "Bean":"Beans and peas", "Bitter_Gourd":"Melons", "Bottle_Gourd":"Melons", "Brinjal": "Apple", "Broccoli": "Broccoli and broccoli raab (rapini)", "Cabbage":"Cabbage", "Capsicum":"Peppers", "Carrot":"Carrots, parsnips", "Cauliflower":"Cauliflower", "Cucumber":"Cucumbers", "Guava":"Guava", "Lime":"Citrus Fruit", "Orange": "Citrus Fruit", "Papaya":"Papaya Mango Feijoa Passionfruit Casaha Melon", "Pomegranate":"Pomegranate", "Potato":"Potatoes", "Pumpkin":"Pumpkins", "Radish":"Radishes", "Tomato":"Tomatoes", "Vitagen":"Milk ", "Pineapple":"Pineapple"}
+  const mapping = { "Apple": "Apples", "Banana":"Bananas", "Bean":"Beans and peas", "Bitter_Gourd":"Melons", "Bottle_Gourd":"Melons", "Brinjal": "Apple", "Broccoli": "Broccoli and broccoli raab (rapini)", "Cabbage":"Cabbage", "Capsicum":"Pepper", "Carrot":"Carrots Parsnips", "Cauliflower":"Cauliflower", "Cucumber":"Cucumbers", "Guava":"Guava", "Lime":"Citrus Fruit", "Orange": "Citrus Fruit", "Papaya":"Papaya Mango Feijoa Passionfruit Casaha Melon", "Pomegranate":"Pomegranate", "Potato":"Potatoes", "Pumpkin":"Pumpkins", "Radish":"Radishes", "Tomato":"Tomatoes"}
   const items = data['sheets'][2]['data'];
   name = name.replace(/\s+$/, '');
 
@@ -260,88 +259,17 @@ function search_for_food(name, usemapping=true) {
   else {
     console.warn("Unsupported operation: usemapping == false");
   }
+  console.log(results);
   return results;
 }
 
-// Get the storage dropdown element.
-const storageDropdown = document.getElementById("storage-dropdown");
+function redirectConsoleToHTML(message) {
+  const consoleOutputElement = document.getElementById("console-output");
+  consoleOutputElement.innerHTML += `<p class="console-output">${message}</p>`;
+}
 
-// Add an event listener to the dropdown's change event.
-storageDropdown.addEventListener("change", function() {
-  // If the user selected the "add new..." option, show a prompt to enter the new storage option.
-  if (this.value === "new") {
-    const newStorageOption = prompt("Enter the new storage option:");
-
-    // If the user entered a new storage option, add it to the dropdown.
-    if (newStorageOption) {
-      const newOption = document.createElement("option");
-      newOption.value = newStorageOption;
-      newOption.text = newStorageOption;
-      storageDropdown.appendChild(newOption);
-    }
-  }
-});
-
-// Get the save button element.
-const saveButton = document.getElementById("save-button");
-
-// Add an event listener to the save button's click event.
-saveButton.addEventListener("click", function() {
-  const foodname = document.getElementById("food-name").innerHTML;
-  const foodimage = document.getElementById("food-image").src;
-  const storage = document.getElementById("storage-dropdown").value;
-  let foodexpiry = (new Date()).getDate();
-
-  if (storage === "Refrigerator") {
-    foodexpiry += results["refrigerate"][0];
-  }
-  else if (storage === "Freezer") {
-    foodexpiry += results["freeze"][0];
-  }
-  else {
-    foodexpiry += results["pantry"][0];
-  }
-  function generate5LetterUUID() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let uuid = '';
-  
-    for (let i = 0; i < 5; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      uuid += characters.charAt(randomIndex);
-    }
-  
-    return uuid;
-  }
-  
-  
-  let foodData = { 'id': generate5LetterUUID(), 'foodname': foodname, 'foodimage': foodimage, 'storage': storage, 'foodexpiry': foodexpiry };
-  // Save the information to the database.
-  // Save the array to localStorage.
-  // localStorage.setItem("food-data", JSON.stringify(foodData));
-  if (localStorage.getItem("food-data") === null) {
-    // Create a new array
-    const foodDataArray = [];
-    // Add the food data to the array
-    foodDataArray.push(JSON.stringify(foodData));
-    // Set the "food-data" item in localStorage
-    localStorage.setItem("food-data", JSON.stringify(foodDataArray));
-  } else {
-    // Get the existing food data array from localStorage
-    const foodDataArray = JSON.parse(localStorage.getItem("food-data"));
-    // Add the new food data to the array
-    foodDataArray.push(JSON.stringify(foodData));
-    // Set the "food-data" item in localStorage
-    localStorage.setItem("food-data", JSON.stringify(foodDataArray));
-  }
-  
-  // Show a green text to indicate that the information is successfully saved.
-  const successMessage = document.createElement("p");
-  successMessage.classList.add("text-success");
-  successMessage.textContent = "Information successfully saved!";
-  document.body.appendChild(successMessage);
-
-  // Remove the green text after 1 second.
-  setTimeout(function() {
-    document.body.removeChild(successMessage);
-  }, 1000);
-});
+// Redirect all console messages to the function
+console.log = redirectConsoleToHTML;
+console.warn = redirectConsoleToHTML;
+console.error = redirectConsoleToHTML;
+console.debug = redirectConsoleToHTML;
