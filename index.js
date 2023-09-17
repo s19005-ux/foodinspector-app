@@ -293,16 +293,46 @@ saveButton.addEventListener("click", function() {
 
 console.log(foodexpiry);
   if (storage === "Refrigerator") {
-    const days = (results["refrigerate"][1] === "Days" ? 1 : (results["refrigerate"][1] === "Weeks" ? 7 : 30) )
-    foodexpiry.setDate(foodexpiry.getDate() + results["refrigerate"][0]) * days;
+    const unit = results["refrigerate"][1];
+    const magnitude = results["refrigerate"][0];
+    if (unit === "Days") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude);
+    }
+    else if (unit === "Months")
+    {
+      foodexpiry.setMonth(foodexpiry.getMonth() + magnitude);
+    }
+    else if (unit === "Weeks") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude * 7);
+    }
   }
   else if (storage === "Freezer") {
-    const days = (results["freeze"][1] === "Days" ? 1 : (results["freeze"][1] === "Weeks" ? 7 : 30) )
-    foodexpiry.setDate(foodexpiry.getDate() + results["freeze"][0]) * days;
+    const unit = results["freeze"][1];
+    const magnitude = results["freeze"][0];
+    if (unit === "Days") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude);
+    }
+    else if (unit === "Months")
+    {
+      foodexpiry.setMonth(foodexpiry.getMonth() + magnitude);
+    }
+    else if (unit === "Weeks") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude * 7);
+    }
   }
   else {
-    const days = (results["pantry"][1] === "Days" ? 1 : (results["pantry"][1] === "Weeks" ? 7 : 30) )
-    foodexpiry.setDate(foodexpiry.getDate() + results["pantry"][0]) * days;
+    const unit = results["freeze"][1];
+    const magnitude = results["freeze"][0];
+    if (unit === "Days") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude);
+    }
+    else if (unit === "Months")
+    {
+      foodexpiry.setMonth(foodexpiry.getMonth() + magnitude);
+    }
+    else if (unit === "Weeks") {
+      foodexpiry.setDate(foodexpiry.getDate() + magnitude * 7);
+    }
   }
   function generate5LetterUUID() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
