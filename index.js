@@ -7,7 +7,7 @@ var results;
      
     // Load the model.
     const tfliteModel = await tf.loadGraphModel(
-      "jsmodelv9/model.json",
+      "jsmodelv6/model.json",
     );
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
