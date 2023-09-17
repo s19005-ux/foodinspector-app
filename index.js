@@ -7,7 +7,7 @@ var results;
      
     // Load the model.
     const tfliteModel = await tf.loadGraphModel(
-      "jsmodelv6/model.json",
+      "jsmodelv9/model.json",
     );
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -293,13 +293,16 @@ saveButton.addEventListener("click", function() {
 
 console.log(foodexpiry);
   if (storage === "Refrigerator") {
-    foodexpiry.setDate(foodexpiry.getDate() + results["refrigerate"][0]);
+    const days = (results["refrigerate"][1] === "Days" ? 1 : (results["refrigerate"][1] === "Weeks" ? 7 : 30) )
+    foodexpiry.setDate(foodexpiry.getDate() + results["refrigerate"][0]) * days;
   }
   else if (storage === "Freezer") {
-    foodexpiry.setDate(foodexpiry.getDate() + results["freeze"][0]);
+    const days = (results["freeze"][1] === "Days" ? 1 : (results["freeze"][1] === "Weeks" ? 7 : 30) )
+    foodexpiry.setDate(foodexpiry.getDate() + results["freeze"][0]) * days;
   }
   else {
-    foodexpiry.setDate(foodexpiry.getDate() + results["pantry"][0]);
+    const days = (results["pantry"][1] === "Days" ? 1 : (results["pantry"][1] === "Weeks" ? 7 : 30) )
+    foodexpiry.setDate(foodexpiry.getDate() + results["pantry"][0]) * days;
   }
   function generate5LetterUUID() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
