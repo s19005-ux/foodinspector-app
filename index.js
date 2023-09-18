@@ -179,9 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             await navigator.mediaDevices.getUserMedia({ video: 
 				{
-				 mandatory: {
 					facingMode: "environment",
-				}
 				}
 			})
             .then(function (stream) {
