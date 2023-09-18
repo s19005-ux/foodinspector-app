@@ -7,7 +7,7 @@ var results;
      
     // Load the model.
     const tfliteModel = await tf.loadGraphModel(
-      "jsmodelv14/model.json",
+      "jsmodelv15/model.json",
     );
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -62,10 +62,6 @@ var results;
       resizeWidth: 224,
       resizeHeight: 224,
       facingMode: 'environment',
-	  minWidth: 480,
-	  minHeight: 480,
-	  maxWidth: 480,
-	  maxHeight: 480
     });
     let predictimg = await tfwebcam.capture();
     //predictimg = predictimg.expandDims(0).div(127.5).sub(1);
@@ -185,10 +181,6 @@ document.addEventListener("DOMContentLoaded", function() {
 				{
 				 mandatory: {
 					facingMode: "environment",
-					minWidth: 480,
-					minHeight: 480,
-					maxWidth: 480,
-					maxHeight: 480
 				}
 				}
 			})
