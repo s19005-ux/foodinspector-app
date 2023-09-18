@@ -7,7 +7,7 @@ var results;
      
     // Load the model.
     const tfliteModel = await tf.loadGraphModel(
-      "jsmodelv6/model.json",
+      "jsmodelv14/model.json",
     );
     // Create an XMLHttpRequest object
     const xhr = new XMLHttpRequest();
@@ -61,10 +61,15 @@ var results;
     const tfwebcam = await tf.data.webcam(videoElement, {
       resizeWidth: 224,
       resizeHeight: 224,
-      facingMode: 'environment'
+      facingMode: 'environment',
+	  minWidth: 480,
+	  minHeight: 480,
+	  maxWidth: 480,
+	  maxHeight: 480
     });
     let predictimg = await tfwebcam.capture();
-    predictimg = predictimg.expandDims(0).div(127.5).sub(1);
+    //predictimg = predictimg.expandDims(0).div(127.5).sub(1);
+	predictimg = predictimg.expandDims(0);
 
     const predict2 = tfliteModel.predict(predictimg);
     // let predictions = outputTensor.dataSync();
@@ -176,7 +181,17 @@ var results;
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("open-button").addEventListener("click", async function() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            await navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment"}})
+            await navigator.mediaDevices.getUserMedia({ video: 
+				{
+				 mandatory: {
+					facingMode: "environment",
+					minWidth: 480,
+					minHeight: 480,
+					maxWidth: 480,
+					maxHeight: 480
+				}
+				}
+			})
             .then(function (stream) {
                 videoElement = document.getElementById('camera-feed'); // Assign the videoElement here
                 videoElement.srcObject = stream;
